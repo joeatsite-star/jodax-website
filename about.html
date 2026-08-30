@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Jodax</title>
+<meta name="description" content="Jodax is a small software studio building focused, honest tools for Shopify merchants. Simple beats clever, the details are the product, and we finish the last 20%.">
+<!--
+  ┌─────────────────────────────────────────────────────────┐
+  │  Built by the Jodax team:                                │
+  │    Lead design & QA ......... Joe Sabre                  │
+  │    Research & support ....... Dax                        │
+  │    UI & functionality ....... Mr Goldenbeads            │
+  │    Technical & coding ....... CC                         │
+  │    Archives & overview ...... The Oracle                │
+  │  Thanks for reading the source. 🧮                       │
+  └─────────────────────────────────────────────────────────┘
+-->
+<style>
+  :root{
+    --purple:#6c63ff;
+    --purple-deep:#2d1b69;
+    --gold:#ffc43d;
+    --gold-ink:#2d1b0a;
+    --bg:#0f0f14;
+    --bg-soft:#16161f;
+    --tile:#241b3d;
+    --tile-border:#4a3f7a;
+    --ink:#ffffff;
+    --ink-soft:#b8b6c8;
+    --radius:20px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.5;
+  }
+  a{ color:inherit; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+
+  /* buttons */
+  .btn{ display:inline-block; padding:15px 30px; border-radius:12px; font-weight:800; font-size:16px; text-decoration:none; border:none; cursor:pointer; transition:transform .12s ease, filter .12s ease; }
+  .btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+  .btn-gold{ background:var(--gold); color:var(--gold-ink); }
+  .btn-ghost{ border:2px solid rgba(255,255,255,.35); color:#fff; padding:13px 28px; border-radius:12px; font-weight:800; text-decoration:none; display:inline-block; }
+  .btn-ghost:hover{ border-color:#fff; }
+
+  /* ---------- HEADER (shared shell) ---------- */
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(15,15,20,.82); backdrop-filter:blur(10px); border-bottom:1px solid #23232e; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1120px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; text-decoration:none; }
+  .brand .logo{ width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--purple),var(--purple-deep)); display:inline-flex; align-items:center; justify-content:center; }
+  .brand .logo svg{ width:27px; height:27px; }
+  .nav-links{ display:flex; align-items:center; gap:26px; }
+  .nav-links a{ text-decoration:none; color:var(--ink-soft); font-weight:600; font-size:15px; }
+  .nav-links a:hover{ color:#fff; }
+  .nav-links .btn{ padding:10px 20px; font-size:14px; }
+  .nav-toggle{ display:none; background:none; border:none; color:#fff; font-size:26px; cursor:pointer; }
+  @media(max-width:820px){
+    .nav-links{ display:none; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- ABOUT HERO ---------- */
+  .about-hero{ background:linear-gradient(135deg,var(--purple-deep) 0%, var(--purple) 100%); border-radius:28px; padding:64px 56px; margin:32px auto 0; position:relative; overflow:hidden; }
+  .about-hero::after{ content:""; position:absolute; right:-80px; top:-80px; width:340px; height:340px; background:radial-gradient(circle,rgba(255,196,61,.26),transparent 70%); }
+  .about-hero .eyebrow{ position:relative; z-index:1; }
+  .about-hero h1{ font-size:46px; line-height:1.08; font-weight:800; letter-spacing:-.03em; max-width:20ch; margin:16px 0 20px; position:relative; z-index:1; }
+  .about-hero p.lede{ font-size:20px; color:rgba(255,255,255,.92); max-width:60ch; position:relative; z-index:1; }
+  .about-hero p.lede strong{ color:#fff; }
+
+  /* ---------- ETHOS ---------- */
+  section{ padding:60px 0; }
+  .ethos-intro{ font-size:22px; line-height:1.5; color:var(--ink); max-width:60ch; margin:0 auto 8px; font-weight:600; text-align:center; }
+  .ethos-sub{ font-size:16px; color:var(--ink-soft); text-align:center; max-width:52ch; margin:0 auto 48px; }
+
+  /* principles grid */
+  .principles{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  @media(max-width:760px){ .principles{ grid-template-columns:1fr; } }
+  .principle{ background:var(--tile); border:1px solid var(--tile-border); border-radius:var(--radius); padding:28px 26px; position:relative; }
+  .principle .n{ font-size:13px; font-weight:800; color:var(--gold); letter-spacing:.08em; margin-bottom:12px; }
+  .principle h3{ font-size:21px; font-weight:800; letter-spacing:-.01em; margin-bottom:10px; }
+  .principle p{ font-size:15.5px; color:var(--ink-soft); line-height:1.6; }
+  .principle.wide{ grid-column:1 / -1; }
+
+  /* ---------- STUDIO / TEAM LINE ---------- */
+  .studio{ background:var(--bg-soft); border-radius:24px; padding:48px 44px; text-align:center; }
+  .studio h2{ font-size:30px; font-weight:800; letter-spacing:-.02em; margin-bottom:16px; }
+  .studio p{ font-size:17px; color:var(--ink-soft); max-width:58ch; margin:0 auto 10px; line-height:1.6; }
+  .studio p strong{ color:#fff; }
+
+  /* ---------- CTA ---------- */
+  .about-cta{ text-align:center; padding:56px 0 20px; }
+  .about-cta h2{ font-size:30px; font-weight:800; letter-spacing:-.02em; margin-bottom:22px; }
+  .about-cta .btn-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  /* ---------- FOOTER (shared shell) ---------- */
+  footer.site{ border-top:1px solid #23232e; margin-top:40px; padding:48px 0 40px; }
+  .foot{ display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; }
+  .foot-brand{ max-width:280px; }
+  .foot-brand .brand{ margin-bottom:12px; }
+  .foot-brand p{ color:var(--ink-soft); font-size:14px; }
+  .foot-cols{ display:flex; gap:56px; flex-wrap:wrap; }
+  .foot-col h4{ font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin-bottom:14px; }
+  .foot-col a{ display:block; text-decoration:none; color:#fff; font-weight:600; font-size:15px; margin-bottom:10px; opacity:.9; }
+  .foot-col a:hover{ color:var(--gold); }
+  .foot-legal{ margin-top:36px; padding-top:24px; border-top:1px solid #23232e; color:var(--ink-soft); font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <span class="logo">
+        <svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg>
+      </span>
+      Jodax
+    </a>
+    <nav class="nav-links">
+      <a href="features.html">Features</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+      <a class="btn btn-gold" href="#">Get Sam</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ============ ABOUT HERO ============ -->
+<div class="wrap">
+  <div class="about-hero">
+    <div class="eyebrow">About Jodax</div>
+    <h1>We build tools the way we'd want them built for us.</h1>
+    <p class="lede">Jodax is a focused software studio making genuinely useful tools and applications. We sweat the details, test on real devices, and design things to look and run great in whatever application is required.</p>
+  </div>
+</div>
+
+<!-- ============ ETHOS ============ -->
+<section>
+  <div class="wrap">
+    <p class="ethos-intro">We build focused software — and we build it carefully, honestly, and finished properly.</p>
+    <p class="ethos-sub">These aren't slogans. They're how we work, and you can see them in everything we ship.</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="n">01</div>
+        <h3>Simple beats clever</h3>
+        <p>Every feature earns its place, or it doesn't ship. When there's a fragile-but-impressive way and a plain-but-solid way, we take the plain one. Complexity is a cost, not a feature.</p>
+      </div>
+      <div class="principle">
+        <div class="n">02</div>
+        <h3>Honest, never deceptive</h3>
+        <p>Our tools do exactly what we say — no dark patterns, no silent surprises, nothing that misleads you or the people you serve. If something can't be done cleanly, we'll tell you rather than fake it.</p>
+      </div>
+      <div class="principle">
+        <div class="n">03</div>
+        <h3>The details are the product</h3>
+        <p>We test on real devices, sweat the wording, and design things to look like they belong where they live. A tool that works but feels wrong isn't finished.</p>
+      </div>
+      <div class="principle">
+        <div class="n">04</div>
+        <h3>Respect your control</h3>
+        <p>It's your business, your platform, your decisions. Our tools give you the levers and get out of your way — clear, predictable, and yours to command.</p>
+      </div>
+      <div class="principle wide">
+        <div class="n">05</div>
+        <h3>We do the last 20%</h3>
+        <p>Anyone can get something 80% working. We're here for the part where it actually ships, holds up, and doesn't embarrass you six months later — the polish, the edge cases, the finish.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STUDIO / TEAM ============ -->
+<section style="padding-top:20px;">
+  <div class="wrap">
+    <div class="studio">
+      <h2>A small studio, building carefully</h2>
+      <p>Led by <strong>Joe</strong> on design &amp; quality control, <strong>Dax</strong> on concept research &amp; customer support, and some important assistance from our electronic partners. We build lean, we build carefully, and we build things we'd want to use ourselves. Build it right, ready and reliable. The first time.</p>
+      <p>You can see how we work in our tools for Shopify merchants — for example <strong>Sam — Cart Offers &amp; Rewards</strong>, built on exactly these principles: tested on real devices, designed to blend into any store, and finished down to the last detail. More tools are on the way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<div class="wrap">
+  <div class="about-cta">
+    <h2>See the principles in action.</h2>
+    <div class="btn-row">
+      <a class="btn btn-gold" href="#">Get Sam — free to start</a>
+      <a class="btn-ghost" href="features.html">Explore what Sam does</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot">
+      <div class="col foot-brand">
+        <a class="brand" href="index.html">
+          <span class="logo"><svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg></span>
+          Jodax
+        </a>
+        <p>Focused software, built ready, right, and reliable.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="getting-started.html">Getting started</a>
+          <a href="recipes.html">Recipes</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="support.html">Support</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>© 2026 Jodax. All rights reserved.</span>
+      <span>Built in Australia. 🧮</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

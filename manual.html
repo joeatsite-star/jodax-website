@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual — Sam, by Jodax</title>
+<meta name="description" content="The complete Sam reference manual: reward ladders, base and tier cards, reward types, the storefront banner, scheduling, country targeting, the rules that keep offers sane, plans, and the admin settings page — explained in full.">
+<!--
+  ┌─────────────────────────────────────────────────────────┐
+  │  Built by the Jodax team:                                │
+  │    Lead design & QA ......... Joe Sabre                  │
+  │    Research & support ....... Dax                        │
+  │    UI & functionality ....... Mr Goldenbeads            │
+  │    Technical & coding ....... CC                         │
+  │    Archives & overview ...... The Oracle                │
+  │  Thanks for reading the source. 🧮                       │
+  └─────────────────────────────────────────────────────────┘
+-->
+<style>
+  :root{
+    --purple:#6c63ff;
+    --purple-deep:#2d1b69;
+    --gold:#ffc43d;
+    --gold-ink:#2d1b0a;
+    --bg:#0f0f14;
+    --bg-soft:#16161f;
+    --tile:#241b3d;
+    --tile-border:#4a3f7a;
+    --ink:#ffffff;
+    --ink-soft:#b8b6c8;
+    --radius:16px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.55;
+  }
+  a{ color:inherit; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+
+  .btn{ display:inline-block; padding:12px 24px; border-radius:12px; font-weight:800; font-size:15px; text-decoration:none; border:none; cursor:pointer; transition:transform .12s ease, filter .12s ease; }
+  .btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+  .btn-gold{ background:var(--gold); color:var(--gold-ink); }
+
+  /* ---------- HEADER ---------- */
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(15,15,20,.9); backdrop-filter:blur(10px); border-bottom:1px solid #23232e; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1120px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; text-decoration:none; }
+  .brand .logo{ width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--purple),var(--purple-deep)); display:inline-flex; align-items:center; justify-content:center; }
+  .brand .logo svg{ width:27px; height:27px; }
+  .nav-links{ display:flex; align-items:center; gap:26px; }
+  .nav-links a{ text-decoration:none; color:var(--ink-soft); font-weight:600; font-size:15px; }
+  .nav-links a:hover{ color:#fff; }
+  .nav-links a.active{ color:#fff; }
+  .nav-links .btn{ padding:10px 20px; font-size:14px; }
+  .nav-toggle{ display:none; background:none; border:none; color:#fff; font-size:26px; cursor:pointer; }
+  @media(max-width:900px){
+    .nav-links{ display:none; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- PAGE TITLE ---------- */
+  .man-head{ padding:40px 0 8px; }
+  .man-head h1{ font-size:38px; font-weight:800; letter-spacing:-.03em; margin:12px 0 12px; }
+  .man-head p{ font-size:17px; color:var(--ink-soft); max-width:64ch; }
+
+  /* ---------- LAYOUT: sticky TOC + content ---------- */
+  .man-layout{ display:grid; grid-template-columns:262px 1fr; gap:44px; align-items:start; padding:28px 0 40px; }
+  @media(max-width:900px){ .man-layout{ grid-template-columns:1fr; gap:8px; } }
+
+  .toc{ position:sticky; top:78px; align-self:start; background:var(--bg-soft); border:1px solid #23232e; border-radius:var(--radius); padding:20px 18px; max-height:calc(100vh - 100px); overflow:auto; }
+  @media(max-width:900px){ .toc{ position:static; max-height:none; margin-bottom:20px; } }
+  .toc h4{ font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--gold); margin-bottom:14px; }
+  .toc a{ display:block; text-decoration:none; color:var(--ink-soft); font-size:14.5px; font-weight:600; padding:6px 0; border-left:2px solid transparent; padding-left:12px; margin-left:-2px; transition:color .12s ease, border-color .12s ease; }
+  .toc a:hover{ color:#fff; border-left-color:var(--purple); }
+
+  /* ---------- CONTENT ---------- */
+  .content section{ scroll-margin-top:80px; padding:6px 0 34px; border-bottom:1px solid #1c1c26; margin-bottom:6px; }
+  .content section:last-child{ border-bottom:none; }
+  .content h2{ font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:6px; display:flex; align-items:center; gap:10px; }
+  .content h2 .badge{ font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; background:rgba(255,196,61,.16); color:var(--gold); border:1px solid rgba(255,196,61,.45); }
+  .content .lead{ font-size:16px; color:var(--ink-soft); margin-bottom:18px; max-width:70ch; }
+  .content h3{ font-size:18px; font-weight:800; margin:22px 0 8px; }
+  .content p{ font-size:15.5px; color:#d7d5e6; line-height:1.7; margin-bottom:12px; max-width:72ch; }
+  .content p strong{ color:#fff; }
+  .content ul{ margin:0 0 14px 0; padding-left:0; list-style:none; max-width:72ch; }
+  .content li{ font-size:15.5px; color:#d7d5e6; line-height:1.6; padding:6px 0 6px 26px; position:relative; }
+  .content li::before{ content:"›"; position:absolute; left:6px; color:var(--gold); font-weight:800; }
+  .content li strong{ color:#fff; }
+
+  .note{ background:var(--tile); border:1px solid var(--tile-border); border-left:3px solid var(--gold); border-radius:12px; padding:13px 16px; font-size:14.5px; color:#e9e7f4; margin:14px 0; max-width:72ch; }
+  .note b{ color:var(--gold); }
+  .paid-note{ border-left-color:var(--purple); }
+  .paid-note b{ color:#b3acff; }
+
+  /* screenshot slot for annotated images (Joe numbers them in Paint3D; key sits below) */
+  .shot-slot{ margin:16px 0; border:1px dashed var(--tile-border); border-radius:14px; background:var(--bg-soft); min-height:120px; display:flex; align-items:center; justify-content:center; color:#6b6880; font-size:13px; text-align:center; padding:22px; max-width:72ch; }
+  .shot-slot img{ max-width:100%; height:auto; border-radius:12px; box-shadow:0 16px 40px rgba(0,0,0,.5); }
+  .keylist{ counter-reset:k; margin:6px 0 14px; max-width:72ch; }
+  .keylist .keyrow{ display:grid; grid-template-columns:34px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid #1c1c26; }
+  .keylist .keyrow:last-child{ border-bottom:none; }
+  .keynum{ width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg,var(--purple),var(--purple-deep)); color:#fff; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; }
+  .keytxt{ font-size:15px; color:#d7d5e6; line-height:1.55; }
+  .keytxt b{ color:#fff; }
+
+  .backtop{ display:inline-block; margin-top:10px; font-size:13px; color:var(--ink-soft); text-decoration:none; }
+  .backtop:hover{ color:var(--gold); }
+
+  /* ---------- CREATOR MAP (2×2 image grid, column-major, + numbered key below) ---------- */
+  .creator-map{ scroll-margin-top:80px; padding:6px 0 34px; border-bottom:1px solid #1c1c26; margin-bottom:6px; }
+  .creator-map h2{ font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:6px; }
+  .creator-map .lead{ font-size:16px; color:var(--ink-soft); margin-bottom:18px; max-width:72ch; }
+  /* 2×2 grid, COLUMN-MAJOR: 1a & 2a fill the left column, 3a & 4a the right.
+     grid-auto-flow:column with 2 rows makes children flow down-then-right. */
+  .cmap-grid{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; grid-auto-flow:column; gap:16px; margin-bottom:26px; }
+  @media(max-width:680px){ .cmap-grid{ grid-template-columns:1fr; grid-template-rows:none; grid-auto-flow:row; } }
+  .cmap-shot{ border:1px dashed var(--tile-border); border-radius:12px; background:var(--bg-soft); min-height:220px; display:flex; align-items:center; justify-content:center; color:#6b6880; font-size:12px; text-align:center; padding:16px; }
+  .cmap-shot img{ display:block; width:100%; height:auto; border-radius:10px; box-shadow:0 12px 30px rgba(0,0,0,.5); }
+  .cmap-hint{ font-size:13px; color:var(--ink-soft); margin-bottom:22px; }
+  .cmap-hint b{ color:var(--gold); }
+  .cmap-key{ max-width:80ch; }
+  .cmap-key .keyrow{ display:grid; grid-template-columns:34px 1fr; gap:12px; padding:10px 0; border-bottom:1px solid #1c1c26; }
+  .cmap-key .keyrow:last-child{ border-bottom:none; }
+  .cmap-key a.keyrow{ text-decoration:none; transition:transform .1s ease; }
+  .cmap-key a.keyrow:hover{ transform:translateX(3px); }
+  .cmap-key a.keyrow:hover .keytxt b{ color:var(--gold); }
+
+  /* ---------- FOOTER ---------- */
+  footer.site{ border-top:1px solid #23232e; margin-top:20px; padding:48px 0 40px; }
+  .foot{ display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; }
+  .foot-brand{ max-width:280px; }
+  .foot-brand .brand{ margin-bottom:12px; }
+  .foot-brand p{ color:var(--ink-soft); font-size:14px; }
+  .foot-cols{ display:flex; gap:56px; flex-wrap:wrap; }
+  .foot-col h4{ font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin-bottom:14px; }
+  .foot-col a{ display:block; text-decoration:none; color:#fff; font-weight:600; font-size:15px; margin-bottom:10px; opacity:.9; }
+  .foot-col a:hover{ color:var(--gold); }
+  .foot-legal{ margin-top:36px; padding-top:24px; border-top:1px solid #23232e; color:var(--ink-soft); font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <span class="logo">
+        <svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg>
+      </span>
+      Jodax
+    </a>
+    <nav class="nav-links">
+      <a href="features.html">Features</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="manual.html" class="active">Manual</a>
+      <a href="recipes.html">Recipes</a>
+      <a class="btn btn-gold" href="#">Get Sam</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ============ PAGE TITLE ============ -->
+<div class="wrap">
+  <div class="man-head">
+    <div class="eyebrow">Reference manual</div>
+    <h1>The Sam manual</h1>
+    <p>Everything Sam does, explained in full — the reference to fall back on when you want the detail. Use the contents to jump straight to what you need.</p>
+  </div>
+</div>
+
+<!-- ============ LAYOUT ============ -->
+<div class="wrap">
+  <div class="man-layout">
+
+    <!-- ===== STICKY TOC ===== -->
+    <aside class="toc" id="top">
+      <h4>Contents</h4>
+      <a href="#creator" style="color:var(--gold)">★ The offer creator, labelled</a>
+      <a href="#ladders">1. The ladder system</a>
+      <a href="#rewards">2. Reward types</a>
+      <a href="#banner">3. The storefront banner</a>
+      <a href="#styling">4. Styling &amp; fonts</a>
+      <a href="#cartbadge">5. Floating cart badge</a>
+      <a href="#currency">6. Currency handling</a>
+      <a href="#scheduling">7. Scheduling</a>
+      <a href="#geo">8. Country targeting</a>
+      <a href="#rules">9. The rules (guardrails)</a>
+      <a href="#plans">10. Plans &amp; upgrading</a>
+      <a href="#admin">11. The settings page</a>
+      <a href="#underhood">12. Under the hood</a>
+    </aside>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="content">
+
+      <!-- ===== CREATOR MAP (top, after contents) ===== -->
+      <div class="creator-map" id="creator">
+        <h2>★ The offer creator, labelled</h2>
+        <p class="lead">This is the screen where you build an offer. Each numbered marker on the screenshots points to a control — find the number below to read what it does, and click any item to jump to the full section. Start here if you're not sure what a field does.</p>
+
+        <!-- 2×2 GRID, COLUMN-MAJOR: reads DOWN the left (1a→2a), then DOWN the right (3a→4a).
+             CC: wire the 4 numbered screenshots from "Sam cart images" folder:
+               Creator 1a → images/creator-1a.jpg
+               Creator 2a → images/creator-2a.jpg
+               Creator 3a → images/creator-3a.jpg
+               Creator 4a → images/creator-4a.jpg
+             Grid order below is 1a,2a,3a,4a — grid-auto-flow:column places them down-left then down-right. -->
+        <div class="cmap-grid">
+          <div class="cmap-shot"><img src="images/creator-1a.jpg" alt="Offer creator, part 1 (numbered)" loading="lazy"></div>
+          <div class="cmap-shot"><img src="images/creator-2a.jpg" alt="Offer creator, part 2 (numbered)" loading="lazy"></div>
+          <div class="cmap-shot"><img src="images/creator-3a.jpg" alt="Offer creator, part 3 (numbered)" loading="lazy"></div>
+          <div class="cmap-shot"><img src="images/creator-4a.jpg" alt="Offer creator, part 4 (numbered)" loading="lazy"></div>
+        </div>
+        <p class="cmap-hint">Reads down the left column (1 → 2), then down the right (3 → 4). <b>Tip:</b> zoom in on the page if the numbers are small.</p>
+
+        <div class="cmap-key">
+          <a class="keyrow" href="#plans"><span class="keynum">1</span><span class="keytxt"><b>Plan badge &amp; intro</b> — shows your current plan (e.g. Sam Gold) and a one-line summary of what Sam does.</span></a>
+          <a class="keyrow" href="#scheduling"><span class="keynum">2</span><span class="keytxt"><b>Pause scheduled ladders</b> — global switch; when on, no dated ladder runs and Sam falls back to an enabled Always-Active ladder.</span></a>
+          <a class="keyrow" href="#ladders"><span class="keynum">3</span><span class="keytxt"><b>Create offer</b> — the section where you build a new card (Base or Tier).</span></a>
+          <a class="keyrow" href="#ladders"><span class="keynum">4</span><span class="keytxt"><b>Card type</b> — choose Base (the foundation of a ladder, can run alone) or Tier (stacks on a Base to add higher reward levels).</span></a>
+          <a class="keyrow" href="#ladders"><span class="keynum">5</span><span class="keytxt"><b>Ladder name</b> — name your Base's ladder here; add Tier cards later by selecting this name.</span></a>
+          <a class="keyrow" href="#ladders"><span class="keynum">6</span><span class="keytxt"><b>Minimum cart value</b> — the spend at which this offer's reward becomes available.</span></a>
+          <a class="keyrow" href="#banner"><span class="keynum">7</span><span class="keytxt"><b>Intro message</b> — shown from the customer's first item until the teaser appears. Use {remaining} to show the amount left.</span></a>
+          <a class="keyrow" href="#banner"><span class="keynum">8</span><span class="keytxt"><b>Emoji picker</b> — sits beside each message field (Size 1 / Size 2); click to add emoji to that message.</span></a>
+          <a class="keyrow" href="#banner"><span class="keynum">9</span><span class="keytxt"><b>Teaser message</b> — shown partway to the reward. Teasers appear automatically; add a lower rung for more or earlier prompts.</span></a>
+          <a class="keyrow" href="#banner"><span class="keynum">10</span><span class="keytxt"><b>Reward message</b> — shown once the customer has unlocked the reward.</span></a>
+          <a class="keyrow" href="#scheduling"><span class="keynum">11</span><span class="keytxt"><b>Schedule — start / end date</b> — set dates to run a dated ladder; leave blank to keep the offer Always-Active.</span></a>
+          <a class="keyrow" href="#scheduling"><span class="keynum">12</span><span class="keytxt"><b>Show countdown timer</b> — displays the time remaining on a dated offer.</span></a>
+          <a class="keyrow" href="#geo"><span class="keynum">13</span><span class="keytxt"><b>Countries</b> — leave unchecked to show everywhere, or check countries to show the offer only there.</span></a>
+          <a class="keyrow" href="#rewards"><span class="keynum">14</span><span class="keytxt"><b>Discount type</b> — choose the reward: none, percentage, fixed amount, free shipping, or free gift.</span></a>
+          <a class="keyrow" href="#rewards"><span class="keynum">15</span><span class="keytxt"><b>Discount %</b> — the percentage applied automatically at checkout when the reward qualifies (shown for a percentage reward).</span></a>
+          <a class="keyrow" href="#rewards"><span class="keynum">16</span><span class="keytxt"><b>Free gift — choose gift product</b> — pick the product added free. Set its price to $0.00 and status to Unlisted first (Draft products can't be added).</span></a>
+          <a class="keyrow" href="#admin"><span class="keynum">17</span><span class="keytxt"><b>Save offer</b> — saves the card. New cards are created disabled; enable the card to bring the offer live.</span></a>
+          <a class="keyrow" href="#admin"><span class="keynum">18</span><span class="keytxt"><b>Preview</b> — shows the banner content for the selected card (wording only; colours are set in the theme editor).</span></a>
+          <a class="keyrow" href="#admin"><span class="keynum">19</span><span class="keytxt"><b>Active offers</b> — your live cards, with a count of offers used.</span></a>
+          <a class="keyrow" href="#admin"><span class="keynum">20</span><span class="keytxt"><b>Offer controls</b> — Disable, Edit, or Delete a ladder, and see its Active status.</span></a>
+          <a class="keyrow" href="#ladders"><span class="keynum">21</span><span class="keytxt"><b>Base card</b> — the foundation card of a ladder, shown with its threshold and reward.</span></a>
+          <a class="keyrow" href="#ladders"><span class="keynum">22</span><span class="keytxt"><b>Tier card</b> — a higher rung stacked on the Base, unlocking a bigger reward at a higher threshold.</span></a>
+        </div>
+
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </div>
+
+      <!-- 1. LADDER SYSTEM -->
+      <section id="ladders">
+        <h2>1. The ladder system</h2>
+        <p class="lead">The ladder is Sam's core engine. Shoppers unlock rewards as their cart total climbs past thresholds you set — the higher they spend, the better the reward.</p>
+        <h3>Thresholds &amp; rungs</h3>
+        <p>Each rung of a ladder is a <strong>spending threshold</strong> and the <strong>reward</strong> it unlocks. Set a threshold (say $75), pick what it gives (a discount, free shipping, or a gift), and Sam shows shoppers exactly how far they are from reaching it.</p>
+        <h3>Base cards and tier cards</h3>
+        <ul>
+          <li>A <strong>base card</strong> is the anchor of a ladder. It owns the ladder's identity, its name, and (on Sam Gold) its dates and country targeting.</li>
+          <li><strong>Tier cards</strong> are extra rungs that attach to a base — higher thresholds unlocking bigger rewards. Tiers inherit the base's schedule and targeting.</li>
+          <li>Sam groups tiers under their base and renders them as one ladder, read left-to-right (base → higher tiers).</li>
+        </ul>
+        <h3>How the reward is chosen</h3>
+        <p>Sam always gives a cart the <strong>best reward it currently qualifies for</strong> — it "snaps" to the highest rung the cart has reached. As shoppers add more, they move up automatically; if they remove items, they move back down. It's always live and always accurate.</p>
+        <div class="note"><b>The $0 storewide sale:</b> set a base card's threshold to <b>$0</b> and it becomes an instant storewide sale — the reward shows and applies the moment a visitor arrives, with no minimum spend. You can still stack a tier on top (e.g. 20% off everything, plus 40% at $200). A $0 sale uses a percentage or free-shipping reward; on a $0 base only the reward message shows (intro and teaser don't apply). See the <a href="recipes.html">Pre-built offers</a> page for sale recipes.</div>
+        <div class="note paid-note"><b>Free vs Gold:</b> the free plan runs <b>one</b> always-active ladder. Sam Gold lets you build <b>multiple</b> ladders and schedule them — one always-active, plus dated ladders that run in their own windows. Either way, exactly one ladder is live at a time — Sam enforces this so banners and rewards never conflict.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 2. REWARD TYPES -->
+      <section id="rewards">
+        <h2>2. Reward types</h2>
+        <p class="lead">Choose what each rung unlocks. There are four reward types (plus a message-only option). Percentage, fixed-amount and free-shipping rewards apply automatically at checkout — no separate Shopify discount to create.</p>
+
+        <h3>Percentage discount</h3>
+        <p>Takes a percentage off the cart (e.g. 10% off) when the shopper qualifies. A percentage isn't tied to any currency — 10% is 10% for every shopper, everywhere — so you can write it freely in your banner messages without worrying about conversion.</p>
+
+        <h3>Free shipping</h3>
+        <p>Removes the shipping cost at checkout once the threshold is reached. Simply choose free shipping as the reward and set the spend required — Sam handles the rest. Like a percentage, it carries no currency figure, so it's safe to mention plainly in your banner.</p>
+
+        <h3>Free gift <span class="badge">Sam Gold</span></h3>
+        <p>Automatically offers a product from your catalogue as the reward. To set one up: create the gift product in Shopify, set its <strong>price to $0.00</strong> and its <strong>status to Unlisted</strong> (Draft products can't be added to a cart), then choose it with <em>Choose gift product</em> in the reward settings. When the shopper qualifies, they can add it to their cart for free.</p>
+
+        <h3>Fixed-amount discount</h3>
+        <p>Takes a set amount off the cart total (e.g. $50 off). <strong>Sam handles this in your shop's own currency.</strong> If a shopper is browsing in a different currency, the amount isn't shown converted on the banner — but it is <strong>automatically converted at checkout</strong>, so the discount they receive is correct for their currency.</p>
+        <div class="note"><b>Important — fixed amounts in your banner:</b> because your banner text is static, always state the currency when you mention a fixed amount, e.g. <em>"$50 USD off when you spend $1000 USD."</em> That way a shopper in another currency understands the figure is in your shop's currency (and knows it'll be converted for them at checkout). See <a href="#banner" style="color:var(--gold)">the banner section</a> for more on writing amounts.</div>
+
+        <h3>Message-only rung</h3>
+        <p>A rung that shows a message with no reward attached — useful for pure encouragement ("Almost at free shipping!") or to add an earlier teaser prompt.</p>
+
+        <div class="note"><b>Automatic by design:</b> for percentage, fixed and free-shipping rewards, Sam applies the discount itself at checkout. There are no codes to hand out and nothing to keep in sync.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 3. THE BANNER -->
+      <section id="banner">
+        <h2>3. The storefront banner</h2>
+        <p class="lead">The banner is what shoppers see. It changes as they move up the ladder, so the message always matches where they are.</p>
+        <h3>The three states</h3>
+        <ul>
+          <li><strong>Intro</strong> — the first thing shoppers see, introducing the offer.</li>
+          <li><strong>Teaser</strong> — shown partway there, nudging them toward the reward. Sam can automatically show a mid-point teaser to shoppers who are on their way.</li>
+          <li><strong>Reward</strong> — the reward message, shown once they've unlocked it.</li>
+        </ul>
+        <h3>Progress bar &amp; rewards box</h3>
+        <p>A <strong>progress bar</strong> fills as the cart grows, giving shoppers a visual sense of how close they are. When they qualify, the <strong>rewards box</strong> displays what they've earned with an "Earned:" label.</p>
+        <p>You write each message yourself, with a built-in emoji picker and a preview frame to view and tweak it. Message fields have character limits with a live counter so your text always fits.</p>
+        <h3>Writing amounts: use {remaining}</h3>
+        <p>When you want to tell shoppers how much more to spend, type <strong>{remaining}</strong> into your message instead of a fixed number. Sam replaces it live with the exact amount left to reach the reward — for example, "Spend {remaining} more to unlock free shipping!" might show as "Spend $12.00 more...".</p>
+        <p>Best of all, <strong>{remaining} shows in each shopper's own store currency automatically</strong>. That's why it's worth avoiding hard currency figures in your banners: if you write "Spend $20 more", a shopper browsing in euros or pounds sees a figure that doesn't match their cart. Let <strong>{remaining}</strong> do the maths, and your message reads correctly for everyone, everywhere.</p>
+        <div class="note"><b>Rule of thumb:</b> write the <em>idea</em> ("you're almost there!") and let <b>{remaining}</b> handle the <em>number</em>. Reward amounts are always shown in your shop's currency — see <a href="#currency" style="color:var(--gold)">Currency handling</a>.</div>
+        <div class="note"><b>Using a fixed-amount reward?</b> If your banner mentions the discount itself (e.g. "$50 off"), <b>state the currency</b> — write <em>"$50 USD off"</em>, not just "$50 off". Banner text is static and doesn't convert, so naming the currency tells shoppers in other countries the figure is in your shop's currency (Sam converts the actual discount for them at checkout). Full detail in <a href="#rewards" style="color:var(--gold)">Reward types</a>.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 4. STYLING & FONTS -->
+      <section id="styling">
+        <h2>4. Styling &amp; fonts</h2>
+        <p class="lead">Sam is built to look like part of your store, not a widget bolted on top. Styling is set in the Shopify theme editor.</p>
+        <h3>Fonts</h3>
+        <p>Sam <strong>inherits your theme's fonts automatically</strong>. If you'd like more control, you can point Sam at a specific theme font — for example your <strong>Header</strong>, <strong>Body</strong>, or <strong>Navigation</strong> font style — and Sam will read that setting and apply it, so the banner text matches your store exactly.</p>
+        <h3>Colours</h3>
+        <p>Set the <strong>banner background and text colours</strong>, the <strong>progress bar</strong>, and the <strong>badge</strong> to match your palette — or use brighter, eye-catching colours of your choice to make the offer stand out.</p>
+        <div class="note"><b>Where:</b> styling lives in <b>Online Store → Themes → Customize → App embeds → Sam Cart Monitor</b>. Remember to Save in the theme editor after changing it.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 5. FLOATING CART BADGE -->
+      <section id="cartbadge">
+        <h2>5. Floating cart badge</h2>
+        <p class="lead">A small cart badge that shows how many items are currently in the cart.</p>
+        <p>This is Shopify's built-in floating cart badge — a simple item counter that sits on your storefront. You can choose to <strong>show or hide it</strong>, and when it's on, it displays the number of items in the shopper's cart. It's a standard storefront convenience rather than a Sam reward feature, but you'll find the option among the settings, so it's covered here for completeness.</p>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 6. CURRENCY -->
+      <section id="currency">
+        <h2>6. Currency handling</h2>
+        <p class="lead">Sam is honest about money. It shows values in your shop's currency and applies discounts correctly across currencies.</p>
+        <ul>
+          <li><strong>Currency honesty</strong> — amounts display in the shop's own currency, with no fake or misleading conversions.</li>
+          <li><strong>Cross-currency correctness</strong> — when a shopper checks out in a different presentment currency, Sam's discounts still apply correctly.</li>
+        </ul>
+        <div class="note"><b>Good to know:</b> any reward amount you set is shown and applied in your shop's own currency. Sam won't invent an exchange rate or quietly convert it into something else — what you set is what your shoppers see, honestly and consistently.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 7. SCHEDULING -->
+      <section id="scheduling">
+        <h2>7. Scheduling <span class="badge">Sam Gold</span></h2>
+        <p class="lead">Run offers on a timetable — perfect for seasonal sales and limited-time promotions.</p>
+        <ul>
+          <li><strong>Dated ladders</strong> — give a ladder a start and end date, and it switches itself on and off automatically.</li>
+          <li><strong>Always-active ladders</strong> — run indefinitely (this is how the free plan's single ladder works).</li>
+          <li><strong>Countdown timer</strong> — show shoppers the time remaining on a dated offer, adding urgency.</li>
+          <li><strong>Pause scheduled ladders</strong> — a global switch to pause all dated ladders at once; Sam falls back to an always-active ladder so your store is never left without an offer.</li>
+        </ul>
+        <div class="note"><b>Cards must be enabled to run.</b> New cards are created disabled by default — enable a card to bring it into play. You can have an always-active card enabled <em>alongside</em> several dated cards: the always-active one is your everyday offer, and whenever a dated card's window is live, it takes over. When the dated window ends, Sam falls back to the always-active card, so your store is never left without an offer.</div>
+        <div class="note paid-note"><b>No overlaps:</b> Sam prevents two dated ladders from covering the same dates, so there's never a conflict about which offer is live.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 8. GEO -->
+      <section id="geo">
+        <h2>8. Country targeting <span class="badge">Sam Gold</span></h2>
+        <p class="lead">Show an offer only to shoppers in the countries you choose — run a promotion in one market without touching the rest.</p>
+        <ul>
+          <li><strong>Country allowlist</strong> — pick the countries an offer applies to; shoppers elsewhere simply don't see it.</li>
+          <li><strong>Set on the base, inherited by tiers</strong> — you set targeting once on the base card and the whole ladder follows.</li>
+          <li><strong>Fails open</strong> — if a shopper's country can't be determined, Sam still shows the offer rather than hiding it, so you never lose a sale to uncertainty.</li>
+        </ul>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 9. RULES -->
+      <section id="rules">
+        <h2>9. The rules that keep offers sane</h2>
+        <p class="lead">Sam has a set of built-in guardrails. If an offer breaks one, Sam tells you with a clear message when you save — so you can't accidentally publish something contradictory.</p>
+        <ul>
+          <li><strong>The base is the lowest threshold</strong> — the base card always sits at the bottom of its ladder; tiers go above it.</li>
+          <li><strong>Ladder names are unique</strong> — no two ladders share a name, so they're easy to tell apart.</li>
+          <li><strong>One live undated ladder</strong> — exactly one always-active base is enabled at a time.</li>
+          <li><strong>Dated windows don't overlap</strong> — scheduled ladders can't cover the same dates.</li>
+          <li><strong>One reward family per ladder</strong> — a single ladder sticks to one kind of reward, so the progression is consistent.</li>
+          <li><strong>Rewards go up with spend</strong> — higher thresholds must give better rewards; Sam won't let a bigger spend unlock a smaller reward.</li>
+          <li><strong>One gift per ladder</strong> — at most one free-gift rung on a ladder.</li>
+        </ul>
+        <div class="note"><b>Clear errors:</b> when a rule is broken, Sam shows a plain-language message (as a pop-up toast, visible wherever you're scrolled) telling you exactly what to fix.</div>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 10. PLANS -->
+      <section id="plans">
+        <h2>10. Plans &amp; upgrading</h2>
+        <p class="lead">Everything you need to run real reward ladders is free. Sam Gold unlocks more ladders, more cards, and the advanced features.</p>
+        <h3>Free</h3>
+        <ul>
+          <li>One always-active ladder, up to <strong>4 cards</strong> (1 base + 3 tiers)</li>
+          <li>Percentage, fixed-amount and free-shipping rewards</li>
+          <li>The full banner, styling, progress bar and cart badge</li>
+        </ul>
+        <h3>Sam Gold — $9.99/month (14-day free trial)</h3>
+        <ul>
+          <li><strong>Multiple ladders</strong>, up to <strong>20 cards</strong></li>
+          <li>All reward types, including <strong>free gifts</strong></li>
+          <li><strong>Scheduling</strong>, <strong>countdowns</strong>, and <strong>country targeting</strong></li>
+        </ul>
+        <h3>Building a library, and downgrading</h3>
+        <p>You can build up as many <strong>dormant ladders</strong> as you like and swap which one is live. If you ever drop from Gold back to Free, your advanced configuration isn't deleted — it goes <strong>dormant</strong>, and re-subscribing brings it straight back. Paid features are marked in the admin with a lock and a link to upgrade, and a badge always shows your current plan.</p>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 11. THE SETTINGS PAGE -->
+      <section id="admin">
+        <h2>11. The settings page</h2>
+        <p class="lead">Sam's admin is designed so the ladder itself is the star. Here's how to read it.</p>
+        <ul>
+          <li><strong>Horizontal ladders</strong> — each ladder reads left-to-right (base → tiers), and ladders stack down the page.</li>
+          <li><strong>Compact cards</strong> — cards are kept tight so the shape of the ladder is clear at a glance; the base card has a thicker border to mark it as the anchor.</li>
+          <li><strong>Live banner preview</strong> — three bands (Intro / Teaser / Win) show exactly what shoppers will read, and update when you select a card.</li>
+          <li><strong>Click to peek</strong> — click any card to preview it without opening it for editing.</li>
+          <li><strong>Dormant muting</strong> — ladders that aren't live are faded, so the active one stands out.</li>
+        </ul>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+      <!-- 13. UNDER THE HOOD -->
+      <section id="underhood">
+        <h2>12. Under the hood</h2>
+        <p class="lead">Mostly invisible, but worth knowing Sam handles it properly.</p>
+        <ul>
+          <li><strong>Automatic discounts</strong> — Sam uses Shopify's own discount functions to apply order and free-shipping rewards at checkout.</li>
+          <li><strong>Settings sync</strong> — your admin configuration drives the storefront banner automatically.</li>
+          <li><strong>Privacy</strong> — Sam includes the required data-handling webhooks and doesn't collect your customers' personal information.</li>
+          <li><strong>Plan detection</strong> — Sam reads your active subscription to know whether you're on a trial, Gold, or free.</li>
+        </ul>
+        <a class="backtop" href="#top">↑ Back to contents</a>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot">
+      <div class="col foot-brand">
+        <a class="brand" href="index.html">
+          <span class="logo"><svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg></span>
+          Jodax
+        </a>
+        <p>Focused software, built ready, right, and reliable.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="getting-started.html">Getting started</a>
+          <a href="manual.html">Manual</a>
+          <a href="recipes.html">Recipes</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="support.html">Support</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>© 2026 Jodax. All rights reserved.</span>
+      <span>Built in Australia. 🧮</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

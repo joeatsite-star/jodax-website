@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Jodax">
+  <defs>
+    <linearGradient id="jodaxGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6c63ff"/>
+      <stop offset="1" stop-color="#2d1b69"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="116" height="116" rx="26" fill="url(#jodaxGrad)"/>
+  <g transform="translate(60 60) scale(1.42) translate(-60 -60)">
+    <g fill="#ffc43d">
+      <circle cx="44" cy="34" r="7.5"/>
+      <circle cx="62" cy="34" r="7.5"/>
+      <circle cx="80" cy="34" r="7.5"/>
+      <circle cx="72" cy="52" r="7.5"/>
+      <circle cx="72" cy="70" r="7.5"/>
+      <circle cx="58" cy="84" r="7.5"/>
+      <circle cx="42" cy="78" r="7.5"/>
+    </g>
+  </g>
+</svg>

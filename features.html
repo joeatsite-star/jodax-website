@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Features — Sam, by Jodax</title>
+<meta name="description" content="Everything Sam does: reward ladders and tiers, auto-applied discounts, free gifts, free shipping, theme-native styling, scheduling, country targeting, countdowns, and more.">
+<!--
+  ┌─────────────────────────────────────────────────────────┐
+  │  Built by the Jodax team:                                │
+  │    Lead design & QA ......... Joe Sabre                  │
+  │    Research & support ....... Dax                        │
+  │    UI & functionality ....... Mr Goldenbeads            │
+  │    Technical & coding ....... CC                         │
+  │    Archives & overview ...... The Oracle                │
+  │  Thanks for reading the source. 🧮                       │
+  └─────────────────────────────────────────────────────────┘
+-->
+<style>
+  :root{
+    --purple:#6c63ff;
+    --purple-deep:#2d1b69;
+    --gold:#ffc43d;
+    --gold-ink:#2d1b0a;
+    --bg:#0f0f14;
+    --bg-soft:#16161f;
+    --tile:#241b3d;
+    --tile-border:#4a3f7a;
+    --ink:#ffffff;
+    --ink-soft:#b8b6c8;
+    --radius:20px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.5;
+  }
+  a{ color:inherit; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+
+  .btn{ display:inline-block; padding:15px 30px; border-radius:12px; font-weight:800; font-size:16px; text-decoration:none; border:none; cursor:pointer; transition:transform .12s ease, filter .12s ease; }
+  .btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+  .btn-gold{ background:var(--gold); color:var(--gold-ink); }
+  .btn-ghost{ border:2px solid rgba(255,255,255,.35); color:#fff; padding:13px 28px; border-radius:12px; font-weight:800; text-decoration:none; display:inline-block; }
+  .btn-ghost:hover{ border-color:#fff; }
+
+  /* ---------- HEADER (shared shell) ---------- */
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(15,15,20,.82); backdrop-filter:blur(10px); border-bottom:1px solid #23232e; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1120px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; text-decoration:none; }
+  .brand .logo{ width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--purple),var(--purple-deep)); display:inline-flex; align-items:center; justify-content:center; }
+  .brand .logo svg{ width:27px; height:27px; }
+  .nav-links{ display:flex; align-items:center; gap:26px; }
+  .nav-links a{ text-decoration:none; color:var(--ink-soft); font-weight:600; font-size:15px; }
+  .nav-links a:hover{ color:#fff; }
+  .nav-links a.active{ color:#fff; }
+  .nav-links .btn{ padding:10px 20px; font-size:14px; }
+  .nav-toggle{ display:none; background:none; border:none; color:#fff; font-size:26px; cursor:pointer; }
+  @media(max-width:820px){
+    .nav-links{ display:none; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- FEATURES HERO ---------- */
+  .feat-hero{ background:linear-gradient(135deg,var(--purple-deep) 0%, var(--purple) 100%); border-radius:28px; padding:60px 56px; margin:32px auto 0; position:relative; overflow:hidden; }
+  .feat-hero::after{ content:""; position:absolute; right:-80px; top:-80px; width:340px; height:340px; background:radial-gradient(circle,rgba(255,196,61,.26),transparent 70%); }
+  .feat-hero .eyebrow{ position:relative; z-index:1; }
+  .feat-hero h1{ font-size:44px; line-height:1.08; font-weight:800; letter-spacing:-.03em; max-width:20ch; margin:16px 0 18px; position:relative; z-index:1; }
+  .feat-hero p{ font-size:19px; color:rgba(255,255,255,.92); max-width:60ch; position:relative; z-index:1; }
+
+  /* ---------- FEATURE GROUPS ---------- */
+  .group{ padding:56px 0 8px; }
+  .group-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:8px; }
+  .group-head h2{ font-size:28px; font-weight:800; letter-spacing:-.02em; }
+  .group-head .tag{ font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px; }
+  .tag-free{ background:rgba(108,99,255,.22); color:#c9c4ff; border:1px solid #4a3f7a; }
+  .tag-gold{ background:rgba(255,196,61,.18); color:var(--gold); border:1px solid rgba(255,196,61,.5); }
+  .group-sub{ font-size:16px; color:var(--ink-soft); max-width:66ch; margin-bottom:30px; }
+
+  .fgrid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  @media(max-width:760px){ .fgrid{ grid-template-columns:1fr; } }
+  .fcard{ background:var(--tile); border:1px solid var(--tile-border); border-radius:var(--radius); padding:26px 24px; }
+  .fcard .ic{ font-size:26px; margin-bottom:12px; }
+  .fcard h3{ font-size:19px; font-weight:800; letter-spacing:-.01em; margin-bottom:9px; display:flex; align-items:center; gap:9px; flex-wrap:wrap; }
+  .fcard h3 .mini{ font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:999px; }
+  .fcard p{ font-size:15px; color:var(--ink-soft); line-height:1.62; }
+  .fcard.wide{ grid-column:1 / -1; }
+
+  /* ---------- PLANS STRIP ---------- */
+  .plans{ padding:56px 0 20px; }
+  .plans-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media(max-width:680px){ .plans-grid{ grid-template-columns:1fr; } }
+  .plan{ border-radius:22px; padding:32px 30px; border:1px solid var(--tile-border); background:var(--tile); }
+  .plan.gold{ border-color:rgba(255,196,61,.55); background:linear-gradient(160deg,#2a2140,#1c1730); }
+  .plan h3{ font-size:22px; font-weight:800; margin-bottom:4px; }
+  .plan .price{ font-size:34px; font-weight:800; letter-spacing:-.02em; margin:8px 0 4px; }
+  .plan .price small{ font-size:15px; font-weight:600; color:var(--ink-soft); }
+  .plan .note{ font-size:14px; color:var(--ink-soft); margin-bottom:18px; }
+  .plan ul{ list-style:none; }
+  .plan li{ font-size:15px; color:#e9e7f4; padding:7px 0 7px 26px; position:relative; }
+  .plan li::before{ content:"✓"; position:absolute; left:0; color:var(--gold); font-weight:800; }
+
+  /* ---------- CTA ---------- */
+  .feat-cta{ text-align:center; padding:60px 0 20px; }
+  .feat-cta h2{ font-size:30px; font-weight:800; letter-spacing:-.02em; margin-bottom:20px; }
+  .feat-cta .btn-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  /* ---------- FOOTER (shared shell) ---------- */
+  footer.site{ border-top:1px solid #23232e; margin-top:44px; padding:48px 0 40px; }
+  .foot{ display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; }
+  .foot-brand{ max-width:280px; }
+  .foot-brand .brand{ margin-bottom:12px; }
+  .foot-brand p{ color:var(--ink-soft); font-size:14px; }
+  .foot-cols{ display:flex; gap:56px; flex-wrap:wrap; }
+  .foot-col h4{ font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin-bottom:14px; }
+  .foot-col a{ display:block; text-decoration:none; color:#fff; font-weight:600; font-size:15px; margin-bottom:10px; opacity:.9; }
+  .foot-col a:hover{ color:var(--gold); }
+  .foot-legal{ margin-top:36px; padding-top:24px; border-top:1px solid #23232e; color:var(--ink-soft); font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <span class="logo">
+        <svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg>
+      </span>
+      Jodax
+    </a>
+    <nav class="nav-links">
+      <a href="features.html" class="active">Features</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+      <a class="btn btn-gold" href="#">Get Sam</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<div class="wrap">
+  <div class="feat-hero">
+    <div class="eyebrow">Everything Sam does</div>
+    <h1>A lot of app, for a little money.</h1>
+    <p>Sam turns your cart into a reward ladder — shoppers see how close they are to the next perk, and Sam applies it automatically when they get there. Here's the full toolkit.</p>
+  </div>
+</div>
+
+<!-- ============ GROUP 1: THE LADDER ============ -->
+<section class="group">
+  <div class="wrap">
+    <div class="group-head"><h2>Build the offer</h2><span class="tag tag-free">Free</span></div>
+    <p class="group-sub">The core of Sam: set spending thresholds, and choose what each one unlocks. Simple enough for your first offer in minutes, deep enough to build a full reward ladder.</p>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ic">🎯</div>
+        <h3>Reward ladders</h3>
+        <p>Set a spending threshold and the reward it unlocks. Shoppers see exactly how much more to spend to get there — the nudge that lifts cart totals.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🔥</div>
+        <h3>Storewide sales</h3>
+        <p>Set a threshold of $0 and your offer becomes an instant storewide sale — the discount shows and applies the moment a visitor arrives. Perfect for Black Friday, clearance, and seasonal sales.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🪜</div>
+        <h3>Tiers &amp; multiple thresholds</h3>
+        <p>Stack several rungs on one ladder — spend $50 for one reward, $100 for a bigger one. Bigger carts unlock better perks, and Sam always shows the next step up.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🗂️</div>
+        <h3>Base &amp; tier cards</h3>
+        <p>Organise offers with a base card and its tiers, so a single ladder can carry a whole progression. Create and save up to 20 different offers, and run them at your discretion.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">⏸️</div>
+        <h3>Enable, disable, pause</h3>
+        <p>Turn any offer on or off in a click. Nothing is ever locked in — you're always in control of what's live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 2: THE REWARDS ============ -->
+<section class="group">
+  <div class="wrap">
+    <div class="group-head"><h2>Choose the reward</h2></div>
+    <p class="group-sub">Four kinds of reward, and Sam applies them for you. Percentage, fixed-amount, and free-shipping discounts apply automatically at checkout — no separate Shopify discount to set up.</p>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ic">⚡</div>
+        <h3>Percentage discount <span class="mini tag-free">Free</span></h3>
+        <p>Take a percentage off the whole cart when the shopper qualifies — applied automatically at checkout.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">💵</div>
+        <h3>Fixed-amount discount <span class="mini tag-free">Free</span></h3>
+        <p>Knock a set dollar amount off the order the moment the threshold is reached. No codes, no manual steps.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🚚</div>
+        <h3>Free shipping <span class="mini tag-free">Free</span></h3>
+        <p>Unlock free shipping at a spending level you choose — Sam removes the shipping cost at checkout when they get there.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🎁</div>
+        <h3>Free gift <span class="mini tag-gold">Gold</span></h3>
+        <p>Reward a full cart with a free product. Pick the gift from your own catalogue, and Sam adds it as the unlocked perk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 3: THE BANNER ============ -->
+<section class="group">
+  <div class="wrap">
+    <div class="group-head"><h2>Show it beautifully</h2></div>
+    <p class="group-sub">Sam's storefront banner does the talking — and it's built to look like part of your store, not a widget bolted on top.</p>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ic">📊</div>
+        <h3>Three-state banner</h3>
+        <p>An intro when the cart is empty-ish, a teaser as they get close, and a reward message when they've unlocked it — with a progress bar that fills as they add to cart.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🎨</div>
+        <h3>Matches your store</h3>
+        <p>Sam inherits your theme's fonts automatically — or point it at a specific theme font (like your Header, Body, or Navigation style) for Sam to read and apply. Then set the banner and text colours to match your palette, or use brighter eye-catching colours of your choice.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">✍️</div>
+        <h3>Your words, your emoji</h3>
+        <p>Write each message yourself, with a built-in emoji picker and a preview frame to view and tweak it. Say it in your store's voice.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🛒</div>
+        <h3>Floating cart badge</h3>
+        <p>Shopify's built-in cart badge shows shoppers how many items are in their cart. Sam lets you leave it on or off — a small storefront convenience alongside the banner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 4: TARGETING ============ -->
+<section class="group">
+  <div class="wrap">
+    <div class="group-head"><h2>Control when &amp; where</h2><span class="tag tag-gold">Gold</span></div>
+    <p class="group-sub">Fine-tune exactly who sees an offer and when it runs — for seasonal campaigns, regional promotions, and time-limited pushes.</p>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ic">📅</div>
+        <h3>Scheduling</h3>
+        <p>Give an offer a start and end date so seasonal promotions switch themselves on and off. Set it once and forget it.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🌍</div>
+        <h3>Country targeting</h3>
+        <p>Show an offer only to shoppers in the countries you choose — run a promotion in one market without touching the rest.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">⏳</div>
+        <h3>Countdown urgency</h3>
+        <p>Add a countdown so shoppers know a deal won't last — the nudge that turns "maybe later" into "add to cart now."</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🎛️</div>
+        <h3>Cart monitoring controls</h3>
+        <p>Choose which pages the banner appears on and how responsively it updates, so it behaves exactly the way your store needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP 5: BUILT RIGHT ============ -->
+<section class="group">
+  <div class="wrap">
+    <div class="group-head"><h2>Built right</h2></div>
+    <p class="group-sub">The details that don't show up in a feature list but decide whether an app is a pleasure or a headache.</p>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ic">📱</div>
+        <h3>Works everywhere</h3>
+        <p>Desktop and mobile, tested on real devices. The admin works on your phone; the banner looks right on your shoppers' phones.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🔒</div>
+        <h3>No customer data collected</h3>
+        <p>Sam works from cart totals and your shop's settings. It doesn't gather your customers' personal information — less risk, less to worry about.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">⚙️</div>
+        <h3>Automatic, not manual</h3>
+        <p>The reward applies itself at checkout. No discount codes to hand out, no separate Shopify discount to keep in sync.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic">🧮</div>
+        <h3>Honest by design</h3>
+        <p>Sam shows shoppers real progress toward real rewards. No dark patterns, no fake urgency you didn't set — it does exactly what you tell it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANS ============ -->
+<section class="plans">
+  <div class="wrap">
+    <div class="group-head"><h2>Free to start. Gold when it pays off.</h2></div>
+    <p class="group-sub">Everything you need to run real reward ladders is free. Upgrade to Sam Gold when you want gifts, scheduling, targeting, and urgency.</p>
+    <div class="plans-grid">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <div class="note">The core toolkit, no time limit.</div>
+        <ul>
+          <li>Reward ladders &amp; tiers</li>
+          <li>Percentage, fixed &amp; free-shipping rewards</li>
+          <li>Auto-applied at checkout</li>
+          <li>Three-state banner + progress bar</li>
+          <li>Theme-native colours &amp; fonts</li>
+          <li>Your own messages, with emoji</li>
+        </ul>
+      </div>
+      <div class="plan gold">
+        <h3>Sam Gold</h3>
+        <div class="price">$9.99 <small>/ month</small></div>
+        <div class="note">14-day free trial. Everything in Free, plus:</div>
+        <ul>
+          <li>Free gift rewards</li>
+          <li>Scheduling (dated promotions)</li>
+          <li>Country targeting</li>
+          <li>Countdown urgency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<div class="wrap">
+  <div class="feat-cta">
+    <h2>See it running in your store.</h2>
+    <div class="btn-row">
+      <a class="btn btn-gold" href="#">Add Sam — free to start</a>
+      <a class="btn-ghost" href="getting-started.html">How to set it up</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot">
+      <div class="col foot-brand">
+        <a class="brand" href="index.html">
+          <span class="logo"><svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg></span>
+          Jodax
+        </a>
+        <p>Focused software, built ready, right, and reliable.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="features.html">Features</a>
+          <a href="getting-started.html">Getting started</a>
+          <a href="recipes.html">Recipes</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="support.html">Support</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>© 2026 Jodax. All rights reserved.</span>
+      <span>Built in Australia. 🧮</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

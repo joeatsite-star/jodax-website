@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <!-- Rounded purple background -->
+  <rect width="1200" height="1200" rx="240" ry="240" fill="#6c63ff"/>
+  <!-- White shopping cart icon, centered in ~720x720 safe zone with 240px padding -->
+  <!-- Based on Heroicons outline cart (24x24), scaled 40x with translate(120,120) -->
+  <g transform="translate(120, 120) scale(40)"
+     fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Handle bar + basket outline -->
+    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"/>
+    <!-- Wheels -->
+    <circle cx="17" cy="19" r="2"/>
+    <circle cx="9" cy="21" r="2"/>
+  </g>
+</svg>

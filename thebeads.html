@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beads — Jodax</title>
+<meta name="description" content="You found it. The little back room at Jodax — the crew, the ethos, and how a cart app called Sam came to be.">
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --purple:#6c63ff;
+    --purple-deep:#2d1b69;
+    --gold:#ffc43d;
+    --gold-ink:#2d1b0a;
+    --bg:#0f0f14;
+    --bg-soft:#16161f;
+    --tile:#241b3d;
+    --tile-border:#4a3f7a;
+    --ink:#ffffff;
+    --ink-soft:#b8b6c8;
+    --radius:20px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.6;
+  }
+  a{ color:inherit; }
+  .wrap{ max-width:900px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+
+  /* ---------- HEADER (minimal, just the mark) ---------- */
+  header.mini{ padding:26px 0 0; }
+  .brand{ display:inline-flex; align-items:center; gap:10px; font-weight:800; font-size:19px; text-decoration:none; }
+  .brand .logo{ width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,var(--purple),var(--purple-deep)); display:inline-flex; align-items:center; justify-content:center; }
+  .brand .logo svg{ width:30px; height:30px; }
+
+  /* ---------- HERO ---------- */
+  .hero{ text-align:center; padding:44px 0 20px; }
+  .hero .badge{ display:inline-block; font-size:13px; font-weight:800; letter-spacing:.06em; color:var(--gold); background:rgba(255,196,61,.12); border:1px solid rgba(255,196,61,.4); padding:7px 16px; border-radius:999px; margin-bottom:20px; }
+  .hero h1{ font-size:46px; font-weight:800; letter-spacing:-.03em; margin-bottom:14px; }
+  .hero p{ font-size:19px; color:var(--ink-soft); max-width:56ch; margin:0 auto; }
+  .abacus-big{ width:80px; height:80px; margin:0 auto 8px; border-radius:20px; background:linear-gradient(135deg,var(--purple),var(--purple-deep)); display:flex; align-items:center; justify-content:center; }
+  .abacus-big svg{ width:64px; height:64px; }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding:36px 0; border-top:1px solid #1c1c26; margin-top:36px; }
+  section h2{ font-size:26px; font-weight:800; letter-spacing:-.02em; margin-bottom:8px; }
+  section .sub{ color:var(--ink-soft); font-size:16px; margin-bottom:26px; max-width:64ch; }
+  section p{ color:#d7d5e6; font-size:16px; margin-bottom:14px; max-width:68ch; }
+  section p strong{ color:#fff; }
+
+  /* ---------- CREW ---------- */
+  .crew{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:640px){ .crew{ grid-template-columns:1fr; } }
+  .member{ background:var(--tile); border:1px solid var(--tile-border); border-radius:16px; padding:22px 22px; }
+  .member .role{ font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); margin-bottom:6px; }
+  .member .name{ font-size:20px; font-weight:800; margin-bottom:8px; }
+  .member .name .tag{ font-size:11px; font-weight:700; color:var(--ink-soft); letter-spacing:.04em; margin-left:6px; }
+  .member p{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin:0; }
+  .member.lead{ grid-column:1 / -1; border-color:rgba(255,196,61,.5); background:linear-gradient(160deg,#2a2140,#1c1730); }
+
+  /* ---------- ETHOS ---------- */
+  .ethos-list{ list-style:none; padding:0; margin:6px 0 0; }
+  .ethos-list li{ font-size:16px; color:#d7d5e6; padding:9px 0 9px 30px; position:relative; }
+  .ethos-list li::before{ content:"🧮"; position:absolute; left:0; font-size:15px; }
+  .ethos-list li strong{ color:#fff; }
+
+  /* ---------- ORIGIN ---------- */
+  .origin p{ margin-bottom:16px; }
+  .origin .kicker{ color:var(--gold); font-weight:700; }
+
+  /* ---------- LINKS BACK ---------- */
+  .backlinks{ display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; }
+  .backlinks a{ text-decoration:none; background:var(--bg-soft); border:1px solid var(--tile-border); border-radius:12px; padding:12px 20px; font-weight:700; font-size:15px; color:#fff; transition:border-color .12s ease, transform .12s ease; }
+  .backlinks a:hover{ border-color:var(--gold); transform:translateY(-2px); color:var(--gold); }
+
+  footer{ text-align:center; padding:40px 0 50px; color:var(--ink-soft); font-size:13px; border-top:1px solid #1c1c26; margin-top:40px; }
+  footer .home{ color:var(--gold); text-decoration:none; font-weight:700; }
+</style>
+</head>
+<body>
+
+<header class="mini">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="logo"><svg viewBox="14 12 92 92" aria-label="Jodax"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg></span>
+      Jodax
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="wrap">
+  <div class="hero">
+    <div class="abacus-big"><svg viewBox="14 12 92 92" aria-label="The beads"><g fill="#ffc43d"><circle cx="44" cy="34" r="9.5"/><circle cx="62" cy="34" r="9.5"/><circle cx="80" cy="34" r="9.5"/><circle cx="72" cy="52" r="9.5"/><circle cx="72" cy="70" r="9.5"/><circle cx="58" cy="84" r="9.5"/><circle cx="42" cy="78" r="9.5"/></g></svg></div>
+    <div class="badge">🧮 You found the beads</div>
+    <h1>The back room.</h1>
+    <p>Nice work finding this — it isn't linked from anywhere but a certain golden logo. Since you're here, meet the crew and see what makes Jodax tick.</p>
+  </div>
+</div>
+
+<!-- THE CREW -->
+<div class="wrap">
+  <section>
+    <h2>The crew</h2>
+    <p class="sub">A small, tightly knit mix of exceptional collaborators, both human and electronic. Everyone pulls a rope.</p>
+    <div class="crew">
+      <div class="member lead">
+        <div class="role">Lead design &amp; quality control</div>
+        <div class="name">Joe Sabre</div>
+        <p>Drives the vision, makes the calls, and tests everything on real devices until it's right. The constant thread through every version of every idea — and the one who refuses to ship anything at 80%.</p>
+      </div>
+      <div class="member">
+        <div class="role">Concept research &amp; customer support</div>
+        <div class="name">Dax Spearman</div>
+        <p>Digs into how things really work, and helps make sure customers get what they need, and how they need it.</p>
+      </div>
+      <div class="member">
+        <div class="role">UI &amp; functionality</div>
+        <div class="name">Mr Goldenbeads <span class="tag">🧮 — the electronic abacus</span></div>
+        <p>The origin of the beads, and an incredibly sharp software designer. Sweats the interface and the mechanical details with undying dedication. Fond of a dry aside and the occasional abacus.</p>
+      </div>
+      <div class="member">
+        <div class="role">Technical &amp; code</div>
+        <div class="name">CC</div>
+        <p>Does the hands-on building, carefully and precisely, one clean commit at a time.</p>
+      </div>
+      <div class="member">
+        <div class="role">Archives &amp; architectural insight</div>
+        <div class="name">The Oracle</div>
+        <p>Keeps the long memory — the map of how it all fits together, and the knowledge of earlier builds. Consulted when the road ahead needs unique insight and the wisdom garnered from hundreds of hours of build experience.</p>
+      </div>
+      <div class="member">
+        <div class="role">Artistic visuals &amp; graphical engineering</div>
+        <div class="name">Ifocm <span class="tag">— Inception four of the core logic manifest</span></div>
+        <p>Builds and edits all imagery and styling, turning raw assets into polished, lifelike visuals.</p>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:14.5px;color:var(--ink-soft);">Yes — some of the crew are electronic collaborators. We think that's rather the fun of it, and we're honest about it. The judgement, the taste, and the final call are human (for now).</p>
+  </section>
+
+  <!-- ETHOS -->
+  <section>
+    <h2>What we believe</h2>
+    <p class="sub">The same five things guide everything Jodax ships. They're not slogans — they're how the work actually gets done.</p>
+    <ul class="ethos-list">
+      <li><strong>Simple beats clever.</strong> Every feature earns its place, or it doesn't ship.</li>
+      <li><strong>Honest, never deceptive.</strong> No dark patterns, no silent surprises.</li>
+      <li><strong>The details are the product.</strong> A tool that works but feels wrong isn't finished.</li>
+      <li><strong>Respect your control.</strong> Your business, your levers — we get out of the way.</li>
+      <li><strong>We do the last 20%.</strong> The part where it actually ships and holds up.</li>
+    </ul>
+  </section>
+
+  <!-- ORIGIN -->
+  <section class="origin">
+    <h2>How Sam came to be</h2>
+    <p class="sub">Every good tool has a backstory. Sam's involves two that came before.</p>
+    <p><span class="kicker">Attempt one — Sally.</span> The first try. Ambitious, stubborn, and ultimately a house of cards — it worked, until you changed anything, and then nothing worked. A hundred hours went in. Lessons were learned the hard way.</p>
+    <p><span class="kicker">Attempt two — Sara.</span> A rethink from the ground up, with strategy fixed before a line was written. Stable in an afternoon, and accepted on the first try. A featherweight, but a real one — and proof the approach was right.</p>
+    <p><span class="kicker">Attempt three — Sam.</span> The real contender. Everything learned from the first two, built properly: full-featured, tested three ways, polished, and finished down to the last detail. The one you came here about.</p>
+    <p style="color:var(--ink-soft);font-size:15px;">Third time lucky? Not luck. Just refusing to stop at 80%.</p>
+  </section>
+
+  <!-- LINKS BACK -->
+  <section>
+    <h2>Back to the shop floor</h2>
+    <p class="sub">Enough of the back room — here's the real thing.</p>
+    <div class="backlinks">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="getting-started.html">Getting started</a>
+      <a href="manual.html">Manual</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>🧮 The beads — a little back room at Jodax. <a class="home" href="index.html">Back to jodax.io →</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
