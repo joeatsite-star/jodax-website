@@ -138,6 +138,23 @@
   .foot-col a{ display:block; text-decoration:none; color:#fff; font-weight:600; font-size:15px; margin-bottom:10px; opacity:.9; }
   .foot-col a:hover{ color:var(--gold); }
   .foot-legal{ margin-top:36px; padding-top:24px; border-top:1px solid #23232e; color:var(--ink-soft); font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  /* --- mobile menu (dropdown when open) --- */
+  .nav.open .nav-links{
+    display:flex; flex-direction:column; align-items:stretch; gap:0;
+    position:absolute; top:100%; left:0; right:0;
+    background:rgba(15,15,20,.98); backdrop-filter:blur(10px);
+    border-bottom:1px solid #23232e; padding:8px 0;
+    box-shadow:0 18px 40px rgba(0,0,0,.5);
+  }
+  .nav.open .nav-links a{ padding:14px 24px; font-size:16px; border-bottom:1px solid rgba(255,255,255,.05); }
+  .nav.open .nav-links a:last-child{ border-bottom:none; }
+  .nav.open .nav-links .btn{ margin:12px 24px 6px; text-align:center; }
+  header.site .nav{ position:relative; }
+
+
+  .mobile-home{ display:none; }
+  .nav.open .mobile-home{ display:block; }
 </style>
 </head>
 <body>
@@ -152,6 +169,7 @@
       Jodax
     </a>
     <nav class="nav-links">
+      <a href="index.html" class="mobile-home">Home</a>
       <a href="features.html">Features</a>
       <a href="getting-started.html">Getting started</a>
       <a href="manual.html" class="active">Manual</a>
@@ -258,7 +276,7 @@
         </ul>
         <h3>How the reward is chosen</h3>
         <p>Sam always gives a cart the <strong>best reward it currently qualifies for</strong> — it "snaps" to the highest rung the cart has reached. As shoppers add more, they move up automatically; if they remove items, they move back down. It's always live and always accurate.</p>
-        <div class="note"><b>The $0 storewide sale:</b> set a base card's threshold to <b>$0</b> and it becomes an instant storewide sale — the reward shows and applies the moment a visitor arrives, with no minimum spend. You can still stack a tier on top (e.g. 20% off everything, plus 40% at $200). A $0 sale uses a percentage or free-shipping reward; on a $0 base only the reward message shows (intro and teaser don't apply). See the <a href="recipes.html">Pre-built offers</a> page for sale recipes.</div>
+        <div class="note"><b>The $0 storewide sale:</b> set a base card's threshold to <b>$0</b> and it becomes an instant storewide sale — the reward shows and applies the moment a visitor arrives, with no minimum spend. You can still stack a tier on top (e.g. 20% off everything, plus 40% at $200). A $0 sale uses a percentage or free-shipping reward; on a $0 base only the reward message shows (intro and teaser don't apply). See the <a href="recipes.html">Recipes</a> page for sale recipes.</div>
         <div class="note paid-note"><b>Free vs Gold:</b> the free plan runs <b>one</b> always-active ladder. Sam Gold lets you build <b>multiple</b> ladders and schedule them — one always-active, plus dated ladders that run in their own windows. Either way, exactly one ladder is live at a time — Sam enforces this so banners and rewards never conflict.</div>
         <a class="backtop" href="#top">↑ Back to contents</a>
       </section>
@@ -474,6 +492,28 @@
     </div>
   </div>
 </footer>
+
+
+<script>
+  (function(){
+    var nav = document.querySelector('.nav');
+    var toggle = nav ? nav.querySelector('.nav-toggle') : null;
+    if(nav && toggle){
+      toggle.addEventListener('click', function(e){
+        e.stopPropagation();
+        nav.classList.toggle('open');
+      });
+      // close when a link is tapped
+      nav.querySelectorAll('.nav-links a').forEach(function(a){
+        a.addEventListener('click', function(){ nav.classList.remove('open'); });
+      });
+      // close when tapping outside
+      document.addEventListener('click', function(e){
+        if(nav.classList.contains('open') && !nav.contains(e.target)){ nav.classList.remove('open'); }
+      });
+    }
+  })();
+</script>
 
 </body>
 </html>
