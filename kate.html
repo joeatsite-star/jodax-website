@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate — Overview, by Jodax</title>
+<meta name="description" content="Kate turns your photos, cartoons, and artwork into printable diamond painting patterns on Android. Tune the size and colours, fine-tune by hand, and print at home — offline, no ads, no sign-up.">
+<style>
+  :root{
+    --purple:#6c63ff; --purple-deep:#2d1b69; --gold:#ffc43d; --gold-ink:#2d1b0a;
+    --bg:#0f0f14; --bg-soft:#16161f; --tile:#241b3d; --tile-border:#4a3f7a;
+    --ink:#ffffff; --ink-soft:#b8b6c8; --radius:18px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.6; }
+  a{ color:inherit; }
+  .wrap{ max-width:1000px; margin:0 auto; padding:0 24px; }
+  .narrow{ max-width:820px; }
+
+  header.site{ position:sticky; top:0; z-index:50; background:rgba(15,15,20,.82); backdrop-filter:blur(10px); border-bottom:1px solid #23232e; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1000px; margin:0 auto; position:relative; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; text-decoration:none; }
+  .brand .logo{ width:30px; height:30px; border-radius:8px; overflow:hidden; display:inline-flex; }
+  .brand .logo img{ width:100%; height:100%; object-fit:cover; }
+  .nav-links{ display:flex; align-items:center; gap:26px; }
+  .nav-links a{ text-decoration:none; color:var(--ink-soft); font-weight:600; font-size:15px; }
+  .nav-links a:hover{ color:#fff; }
+  .nav-links a.active{ color:#fff; }
+  .nav-toggle{ display:none; background:none; border:none; color:#fff; font-size:26px; cursor:pointer; }
+  .nav.open .nav-links{ display:flex; flex-direction:column; align-items:stretch; gap:0; position:absolute; top:100%; left:0; right:0; background:rgba(15,15,20,.98); backdrop-filter:blur(10px); border-bottom:1px solid #23232e; padding:8px 0; box-shadow:0 18px 40px rgba(0,0,0,.5); }
+  .nav.open .nav-links a{ padding:14px 24px; font-size:16px; border-bottom:1px solid rgba(255,255,255,.05); }
+  @media(max-width:760px){ .nav-links{ display:none; } .nav-toggle{ display:block; } }
+
+  .plain-cta{ display:inline-block; font-weight:800; font-size:14px; color:var(--gold); }
+
+  /* hero */
+  .hero{ text-align:center; padding:72px 0 40px; }
+  .hero .vicon{ width:96px; height:96px; border-radius:22px; margin:0 auto 24px; overflow:hidden; box-shadow:0 16px 40px rgba(108,99,255,.35); }
+  .hero .vicon img{ width:100%; height:100%; object-fit:cover; }
+  .hero h1{ font-size:46px; line-height:1.1; font-weight:800; letter-spacing:-.03em; margin-bottom:10px; }
+  .hero .tagline{ font-size:21px; font-weight:700; color:#fff; margin-bottom:18px; }
+  .hero p{ font-size:19px; color:var(--ink-soft); max-width:60ch; margin:0 auto 22px; }
+  .hero .store-line{ font-size:14px; font-weight:800; letter-spacing:.04em; color:var(--gold); text-transform:uppercase; }
+  @media(max-width:640px){ .hero h1{ font-size:34px; } .hero .tagline{ font-size:18px; } }
+
+  .section{ padding:44px 0 8px; }
+  .section h2{ font-size:30px; font-weight:800; letter-spacing:-.02em; text-align:center; margin-bottom:10px; }
+  .section .sub{ text-align:center; color:var(--ink-soft); font-size:16.5px; max-width:60ch; margin:0 auto 28px; }
+
+  /* screenshots */
+  .shots{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  @media(max-width:860px){ .shots{ grid-template-columns:repeat(2,1fr); } }
+  .shot{ text-align:center; }
+  .shot .frame{ aspect-ratio:9/19.5; border-radius:26px; padding:7px; background:linear-gradient(160deg,#2a2140,#1c1730); border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45), 0 0 0 1px rgba(108,99,255,.08); overflow:hidden; }
+  .shot .frame img{ display:block; width:100%; height:100%; object-fit:cover; border-radius:20px; background:var(--bg-soft); }
+  .shot .cap{ margin-top:12px; font-size:14px; font-weight:700; color:var(--ink-soft); }
+
+  .feat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media(max-width:720px){ .feat-grid{ grid-template-columns:1fr; } }
+  .feat{ background:var(--tile); border:1px solid var(--tile-border); border-radius:16px; padding:24px 26px; }
+  .feat .ic{ font-size:26px; margin-bottom:10px; }
+  .feat h3{ font-size:18px; font-weight:800; margin-bottom:6px; }
+  .feat p{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+
+  .callout{ background:linear-gradient(160deg,#2a2140,#1c1730); border:1px solid rgba(255,196,61,.4); border-radius:var(--radius); padding:28px 30px; margin-top:30px; text-align:center; }
+  .callout h3{ font-size:20px; font-weight:800; margin-bottom:8px; }
+  .callout p{ font-size:15.5px; color:var(--ink-soft); max-width:58ch; margin:0 auto; }
+  .callout .store-line{ display:inline-block; margin-top:14px; font-size:14px; font-weight:800; color:var(--gold); text-transform:uppercase; letter-spacing:.04em; }
+
+  footer.site{ border-top:1px solid #23232e; margin-top:52px; padding:44px 0 40px; }
+  .foot{ display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; }
+  .foot-brand{ max-width:300px; }
+  .foot-brand .brand{ margin-bottom:12px; }
+  .foot-brand p{ color:var(--ink-soft); font-size:14px; }
+  .foot-cols{ display:flex; gap:56px; flex-wrap:wrap; }
+  .foot-col h4{ font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin-bottom:14px; }
+  .foot-col a{ display:block; text-decoration:none; color:#fff; font-weight:600; font-size:15px; margin-bottom:10px; opacity:.9; }
+  .foot-col a:hover{ color:var(--gold); }
+  .foot-legal{ margin-top:36px; padding-top:24px; border-top:1px solid #23232e; color:var(--ink-soft); font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="kate.html">
+      <span class="logo"><img src="images/kate-icon.png" alt="Kate"></span>
+      Kate
+    </a>
+    <nav class="nav-links">
+      <a href="kate.html" class="active">Overview</a>
+      <a href="katefaq.html">Help &amp; FAQ</a>
+      <a href="index.html">Jodax</a>
+      <span class="plain-cta">Available on Google Play</span>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="wrap">
+  <section class="hero">
+    <div class="vicon"><img src="images/kate-icon.png" alt="Kate app icon"></div>
+    <h1>Kate</h1>
+    <div class="tagline">Turn your images into diamond art</div>
+    <p>Kate turns any photo — or cartoon, artwork, whatever you like — into a printable diamond painting pattern. Pick an image, tune the size and colours, fine-tune by hand, and print it at home. Offline, no ads, no sign-up.</p>
+    <div class="store-line">Available on Google Play</div>
+  </section>
+</div>
+
+<!-- SCREENSHOTS -->
+<div class="wrap">
+  <section class="section">
+    <h2>See it in action</h2>
+    <p class="sub">From your picture to a pattern you can print, in a few taps.</p>
+    <div class="shots">
+      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-1.png" alt="Kate screenshot: picking an image" loading="lazy"></div><figcaption class="cap">Pick your image</figcaption></figure>
+      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-2.png" alt="Kate screenshot: tuning size and colours" loading="lazy"></div><figcaption class="cap">Tune size &amp; colours</figcaption></figure>
+      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-3.png" alt="Kate screenshot: editing cells by hand" loading="lazy"></div><figcaption class="cap">Fine-tune by hand</figcaption></figure>
+      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-4.png" alt="Kate screenshot: printable pattern" loading="lazy"></div><figcaption class="cap">Print at home</figcaption></figure>
+    </div>
+  </section>
+</div>
+
+<!-- WHAT KATE DOES -->
+<div class="wrap">
+  <section class="section">
+    <h2>What Kate does</h2>
+    <div class="feat-grid">
+      <div class="feat"><div class="ic">🖼️</div><h3>Any image into a pattern</h3><p>Photos, cartoons, drawings, artwork — Kate matches your image to real drill colours using perceptual (CIELAB) colour matching, for true-to-life results.</p></div>
+      <div class="feat"><div class="ic">💎</div><h3>The full DMC palette</h3><p>All 454 DMC colours are built in, so every drill in your pattern maps to a real colour code you can buy.</p></div>
+      <div class="feat"><div class="ic">✨</div><h3>Automatic cleanup</h3><p>Smart confetti reduction tidies away scattered stray drills, so your pattern is calmer and far more pleasant to work.</p></div>
+      <div class="feat"><div class="ic">🖌️</div><h3>Edit by hand</h3><p>Zoom right in and recolour individual cells — fix a stray colour, sharpen an edge, make it exactly how you want.</p></div>
+      <div class="feat"><div class="ic">🖨️</div><h3>Two ways to print</h3><p>A clear, readable working chart to follow as you go — or a true-size print-at-home kit to lay your drills on directly.</p></div>
+      <div class="feat"><div class="ic">📄</div><h3>Print-ready PDF</h3><p>Clear symbols, a colour legend, and drill counts for every colour — printed true to scale, so you know exactly what to order.</p></div>
+      <div class="feat"><div class="ic">📚</div><h3>Your pattern library</h3><p>Save, rename, and reopen your patterns any time. Your work is kept safe on your device.</p></div>
+      <div class="feat"><div class="ic">🔒</div><h3>Yours, offline</h3><p>No account, no ads, and nothing sent anywhere. Your images and patterns never leave your device.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- FREE / UNLOCK -->
+<div class="wrap narrow">
+  <section class="section">
+    <h2>Free to download and try — unlock to print.</h2>
+    <div class="callout">
+      <p>Pick an image, build your pattern, tune the colours, and fine-tune it by hand — all free, so you see exactly how it'll turn out. When you're ready, a one-time unlock (no subscription, ever) lets you print and export your finished patterns.</p>
+      <span class="store-line">Available on Google Play</span>
+    </div>
+  </section>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot">
+      <div class="col foot-brand">
+        <a class="brand" href="index.html">
+          <span class="logo"><img src="images/kate-icon.png" alt="Kate"></span>
+          Kate
+        </a>
+        <p>Built by Jodax. Focused software, built ready, right, and reliable.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Kate</h4>
+          <a href="kate.html">Overview</a>
+          <a href="katefaq.html">Help &amp; FAQ</a>
+          <a href="kateterms.html">Terms &amp; Privacy</a>
+        </div>
+        <div class="foot-col">
+          <h4>Jodax</h4>
+          <a href="index.html">Home</a>
+          <a href="samhome.html">Sam (Shopify)</a>
+          <a href="support.html">Support</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>© 2026 Jodax. All rights reserved.</span>
+      <span>Built in Australia. 🧮</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var nav = document.querySelector('.nav');
+    var toggle = nav ? nav.querySelector('.nav-toggle') : null;
+    if(nav && toggle){
+      toggle.addEventListener('click', function(e){ e.stopPropagation(); nav.classList.toggle('open'); });
+      nav.querySelectorAll('.nav-links a').forEach(function(a){ a.addEventListener('click', function(){ nav.classList.remove('open'); }); });
+      document.addEventListener('click', function(e){ if(nav.classList.contains('open') && !nav.contains(e.target)){ nav.classList.remove('open'); } });
+    }
+  })();
+</script>
+
+</body>
+</html>
