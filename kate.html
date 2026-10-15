@@ -49,7 +49,7 @@
   .section .sub{ text-align:center; color:var(--ink-soft); font-size:16.5px; max-width:60ch; margin:0 auto 28px; }
 
   /* video (embed goes in .video; 16:9, responsive) */
-  .video{ position:relative; aspect-ratio:16/9; border-radius:var(--radius); overflow:hidden; border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45); background:var(--bg-soft); }
+  .video{ position:relative; aspect-ratio:16/9; margin-top:18px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45); background:var(--bg-soft); }
   .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
 
   /* phone-style screenshot frame */
@@ -147,20 +147,15 @@
   </section>
 </div>
 
-<!-- ============================================================
-     VIDEO EMBED HERE
-     Paste the YouTube embed inside the .video box below, then
-     un-comment the block. The .video CSS already makes it
-     16:9 and responsive, e.g.:
-       <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
-               title="Kate demo" allowfullscreen loading="lazy"></iframe>
+<!-- VIDEO -->
 <div class="wrap narrow">
   <section class="section">
+    <h2>See Kate in action</h2>
     <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/-VYf_BOYaWE" title="Kate Diamond Paint — see Kate in action" allow="encrypted-media; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </section>
 </div>
-     ============================================================ -->
 
 <!-- WHAT KATE DOES -->
 <div class="wrap">
