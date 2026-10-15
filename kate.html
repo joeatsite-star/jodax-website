@@ -48,13 +48,51 @@
   .section h2{ font-size:30px; font-weight:800; letter-spacing:-.02em; text-align:center; margin-bottom:10px; }
   .section .sub{ text-align:center; color:var(--ink-soft); font-size:16.5px; max-width:60ch; margin:0 auto 28px; }
 
-  /* screenshots */
-  .shots{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-  @media(max-width:860px){ .shots{ grid-template-columns:repeat(2,1fr); } }
-  .shot{ text-align:center; }
-  .shot .frame{ aspect-ratio:9/19.5; border-radius:26px; padding:7px; background:linear-gradient(160deg,#2a2140,#1c1730); border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45), 0 0 0 1px rgba(108,99,255,.08); overflow:hidden; }
-  .shot .frame img{ display:block; width:100%; height:100%; object-fit:cover; border-radius:20px; background:var(--bg-soft); }
-  .shot .cap{ margin-top:12px; font-size:14px; font-weight:700; color:var(--ink-soft); }
+  /* video (embed goes in .video; 16:9, responsive) */
+  .video{ position:relative; aspect-ratio:16/9; border-radius:var(--radius); overflow:hidden; border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45); background:var(--bg-soft); }
+  .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+  /* phone-style screenshot frame */
+  .phone{ border-radius:30px; padding:8px; background:linear-gradient(160deg,#2a2140,#1c1730); border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45), 0 0 0 1px rgba(108,99,255,.08); }
+  .phone img{ display:block; width:100%; height:auto; border-radius:23px; background:var(--bg-soft); }
+
+  /* How Kate works: alternating step rows */
+  .steps{ display:flex; flex-direction:column; gap:56px; margin-top:12px; }
+  .step{ display:grid; grid-template-columns:260px 1fr; gap:48px; align-items:center; }
+  .step:nth-child(even){ grid-template-columns:1fr 260px; }
+  .step:nth-child(even) .phone{ order:2; }
+  .step .num{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:var(--purple); font-weight:800; font-size:15px; margin-bottom:12px; }
+  .step h3{ font-size:24px; font-weight:800; letter-spacing:-.01em; margin-bottom:8px; }
+  .step p{ font-size:16.5px; color:var(--ink-soft); max-width:46ch; }
+  @media(max-width:720px){
+    .steps{ gap:44px; }
+    .step, .step:nth-child(even){ grid-template-columns:1fr; gap:20px; text-align:center; }
+    .step:nth-child(even) .phone{ order:0; }
+    .step .phone{ width:min(240px,72vw); margin:0 auto; }
+    .step p{ margin:0 auto; }
+  }
+
+  /* DeX: monitor-style frames */
+  .dex-grid{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  @media(max-width:720px){ .dex-grid{ grid-template-columns:1fr; } }
+  .monitor{ border-radius:14px; padding:8px; background:#0a0a10; border:1px solid var(--tile-border); box-shadow:0 18px 44px rgba(0,0,0,.45); }
+  .monitor img{ display:block; width:100%; height:auto; border-radius:7px; }
+  figure .cap{ margin-top:12px; font-size:14.5px; font-weight:700; color:var(--ink-soft); text-align:center; }
+
+  /* Printed output: two modes, each a pair of paper pages */
+  .modes{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  @media(max-width:820px){ .modes{ grid-template-columns:1fr; } }
+  .mode{ background:var(--tile); border:1px solid var(--tile-border); border-radius:var(--radius); padding:24px 22px 22px; }
+  .mode .tag{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-ink); background:var(--gold); border-radius:999px; padding:3px 11px; margin-bottom:10px; }
+  .mode h3{ font-size:21px; font-weight:800; margin-bottom:6px; }
+  .mode > p{ font-size:15px; color:var(--ink-soft); margin-bottom:18px; }
+  .mode .tip{ font-size:13.5px; color:var(--gold); font-weight:700; margin:-8px 0 18px; }
+  .pages{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .paper{ display:block; background:#fff; padding:4px; border-radius:4px; box-shadow:0 12px 30px rgba(0,0,0,.5); transition:transform .15s ease; }
+  .paper:hover{ transform:translateY(-3px); }
+  .paper img{ display:block; width:100%; height:auto; }
+  .pages .cap{ font-size:13px; font-weight:600; }
+  .enlarge-hint{ text-align:center; font-size:13px; color:var(--ink-soft); margin-top:14px; }
 
   .feat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   @media(max-width:720px){ .feat-grid{ grid-template-columns:1fr; } }
@@ -109,19 +147,20 @@
   </section>
 </div>
 
-<!-- SCREENSHOTS -->
-<div class="wrap">
+<!-- ============================================================
+     VIDEO EMBED HERE
+     Paste the YouTube embed inside the .video box below, then
+     un-comment the block. The .video CSS already makes it
+     16:9 and responsive, e.g.:
+       <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+               title="Kate demo" allowfullscreen loading="lazy"></iframe>
+<div class="wrap narrow">
   <section class="section">
-    <h2>See it in action</h2>
-    <p class="sub">From your picture to a pattern you can print, in a few taps.</p>
-    <div class="shots">
-      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-1.png" alt="Kate screenshot: picking an image" loading="lazy"></div><figcaption class="cap">Pick your image</figcaption></figure>
-      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-2.png" alt="Kate screenshot: tuning size and colours" loading="lazy"></div><figcaption class="cap">Tune size &amp; colours</figcaption></figure>
-      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-3.png" alt="Kate screenshot: editing cells by hand" loading="lazy"></div><figcaption class="cap">Fine-tune by hand</figcaption></figure>
-      <figure class="shot"><div class="frame"><img src="images/kate-screenshot-4.png" alt="Kate screenshot: printable pattern" loading="lazy"></div><figcaption class="cap">Print at home</figcaption></figure>
+    <div class="video">
     </div>
   </section>
 </div>
+     ============================================================ -->
 
 <!-- WHAT KATE DOES -->
 <div class="wrap">
@@ -137,6 +176,86 @@
       <div class="feat"><div class="ic">📚</div><h3>Your pattern library</h3><p>Save, rename, and reopen your patterns any time. Your work is kept safe on your device.</p></div>
       <div class="feat"><div class="ic">🔒</div><h3>Yours, offline</h3><p>No account, no ads, and nothing sent anywhere. Your images and patterns never leave your device.</p></div>
     </div>
+  </section>
+</div>
+
+<!-- A: HOW KATE WORKS -->
+<div class="wrap">
+  <section class="section">
+    <h2>How Kate works</h2>
+    <p class="sub">From your picture to a pattern you can print, step by step.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="phone"><img src="images/kateconvertsanything.png" alt="Kate turning a picture into a diamond painting pattern" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">1</span><h3>Convert almost anything</h3><p>Start with any photo, drawing, cartoon or piece of artwork. Kate turns it into a diamond painting pattern, matching each colour to a real DMC drill for true-to-life results.</p></div>
+      </div>
+      <div class="step">
+        <div class="phone"><img src="images/kateprojectsize.png" alt="Choosing the size of the finished piece in Kate" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">2</span><h3>Choose your size</h3><p>Decide how big your finished piece will be. As you adjust, Kate shows the finished dimensions and exactly how many drills you'll need.</p></div>
+      </div>
+      <div class="step">
+        <div class="phone"><img src="images/kateconfetticleanup.png" alt="Kate's automatic confetti cleanup setting" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">3</span><h3>Automatic cleanup</h3><p>Kate tidies away scattered single drills — the “confetti” that makes patterns fiddly — so your pattern is cleaner and much easier to place.</p></div>
+      </div>
+      <div class="step">
+        <div class="phone"><img src="images/katecolourchoice.png" alt="Choosing how many colours the pattern uses" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">4</span><h3>Dial in the colours</h3><p>Choose how many colours your pattern uses: fewer for a simpler, bolder look, more for fine detail.</p></div>
+      </div>
+      <div class="step">
+        <div class="phone"><img src="images/kateeditortofix.png" alt="Kate's editor, zoomed in on individual drills" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">5</span><h3>Edit by hand</h3><p>Zoom right in and recolour individual drills to get every detail just the way you want it.</p></div>
+      </div>
+      <div class="step">
+        <div class="phone"><img src="images/kateprintandsave.png" alt="Print, share and save options for a finished pattern" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">6</span><h3>Print or save</h3><p>Export your finished pattern as a PDF to print at home, share, or save to your device. Printing and export come with the one-time unlock.</p></div>
+      </div>
+      <div class="step">
+        <div class="phone"><img src="images/katecreatesaveproject.png" alt="Kate's library of saved pattern projects" width="631" height="1200" loading="lazy"></div>
+        <div><span class="num">7</span><h3>Your pattern library</h3><p>Save your projects, rename them, and reopen them any time. They're kept on your device, so you can pick up right where you left off.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- B: SAMSUNG DEX -->
+<div class="wrap">
+  <section class="section">
+    <h2>Kate on the big screen</h2>
+    <p class="sub">Samsung DeX lets you plug a Samsung phone into a monitor or TV and use it like a desktop, with a mouse and keyboard — so you can see your pattern on a large screen and edit comfortably while your phone does the work. You don't need it, but it's lovely for detailed work.</p>
+    <div class="dex-grid">
+      <figure><div class="monitor"><img src="images/dexscreenshotsliders.jpg" alt="Kate's pattern sliders on a large monitor via Samsung DeX" width="1200" height="675" loading="lazy"></div><figcaption class="cap">Tune your pattern on a big display.</figcaption></figure>
+      <figure><div class="monitor"><img src="images/dexscreenshoteditor.jpg" alt="Kate's editor on a large monitor via Samsung DeX" width="1200" height="675" loading="lazy"></div><figcaption class="cap">Edit individual drills with a mouse, on a full-size screen.</figcaption></figure>
+    </div>
+  </section>
+</div>
+
+<!-- C: THE PRINTED OUTPUT -->
+<div class="wrap">
+  <section class="section">
+    <h2>The printed output</h2>
+    <p class="sub">Kate gives you two kinds of printout, so you can work the way you like.</p>
+    <div class="modes">
+      <div class="mode">
+        <span class="tag">Working Chart</span>
+        <h3>A chart to read while you craft</h3>
+        <p>Enlarged symbols that are easy to follow as you work. It isn't the finished size — you read from it and place your drills on a separate canvas.</p>
+        <div class="pages">
+          <figure><a class="paper" href="images/portrait_working_charttitle.png" target="_blank" rel="noopener"><img src="images/portrait_working_charttitle.png" alt="Working chart, page 1: overview and colour legend" width="849" height="1200" loading="lazy"></a><figcaption class="cap">Page 1 — overview &amp; colour legend</figcaption></figure>
+          <figure><a class="paper" href="images/portrait_working_chartdrills.jpg" target="_blank" rel="noopener"><img src="images/portrait_working_chartdrills.jpg" alt="Working chart: a symbol grid page" width="849" height="1200" loading="lazy"></a><figcaption class="cap">A symbol grid page you read from</figcaption></figure>
+        </div>
+      </div>
+      <div class="mode">
+        <span class="tag">True-Size Kit</span>
+        <h3>The pages become your canvas</h3>
+        <p>Printed at the real finished size. Print the pages, apply a double-sided adhesive sheet, assemble them, and place your drills straight onto the grid — just like a shop-bought kit.</p>
+        <p class="tip">Tip: print at 100% / Actual Size (not “Fit to Page”) so your drills line up.</p>
+        <div class="pages">
+          <figure><a class="paper" href="images/portrait_true_size_kittitle.png" target="_blank" rel="noopener"><img src="images/portrait_true_size_kittitle.png" alt="True-size kit, page 1: overview and legend" width="849" height="1200" loading="lazy"></a><figcaption class="cap">Page 1 — overview &amp; legend</figcaption></figure>
+          <figure><a class="paper" href="images/portrait_true_size_kitdrills.jpg" target="_blank" rel="noopener"><img src="images/portrait_true_size_kitdrills.jpg" alt="True-size kit: a true-size grid page to place drills onto" width="849" height="1200" loading="lazy"></a><figcaption class="cap">A true-size grid page you place drills onto</figcaption></figure>
+        </div>
+      </div>
+    </div>
+    <p class="enlarge-hint">Tap any page to see it larger.</p>
   </section>
 </div>
 
