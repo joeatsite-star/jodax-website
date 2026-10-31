@@ -62,6 +62,9 @@
   .pcard p{ font-size:15.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:24px; flex:1; }
   .pcard .btn{ display:inline-block; padding:13px 26px; border-radius:12px; font-weight:800; font-size:15px; text-decoration:none; background:var(--gold); color:var(--gold-ink); transition:filter .12s ease; }
   .pcard .btn:hover{ filter:brightness(1.05); }
+  .pcard .actions{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; }
+  .pcard .play-badge{ display:inline-block; line-height:0; }
+  .pcard .play-badge img{ height:72px; width:auto; max-width:100%; }
 
   /* ethos */
   .ethos{ padding:64px 0 40px; }
@@ -137,7 +140,10 @@
         <h3>Vera</h3>
         <div class="platform">For Android</div>
         <p>A clean, straightforward audio converter. Convert audio between formats, extract audio from video, trim and reverse tracks, and save straight to your music — no ads, no sign-up, no clutter.</p>
-        <a class="btn" href="vera.html">Explore Vera →</a>
+        <div class="actions">
+          <a class="btn" href="vera.html">Explore Vera →</a>
+          <a class="play-badge" href="https://play.google.com/store/apps/details?id=io.jodax.vera" target="_blank" rel="noopener"><img src="images/google-play-badge.png" width="186" height="72" alt="Get Vera Audio on Google Play"></a>
+        </div>
       </div>
 
       <!-- KATE -->
@@ -146,7 +152,10 @@
         <h3>Kate</h3>
         <div class="platform">For Android</div>
         <p>Turn any photo into a printable diamond painting pattern. Pick an image, tune the colours and size, fine-tune by hand, and print it at home — offline, no ads, no sign-up.</p>
-        <a class="btn" href="kate.html">Explore Kate →</a>
+        <div class="actions">
+          <a class="btn" href="kate.html">Explore Kate →</a>
+          <a class="play-badge" href="https://play.google.com/store/apps/details?id=io.jodax.kate" target="_blank" rel="noopener"><img src="images/google-play-badge.png" width="186" height="72" alt="Get Kate on Google Play"></a>
+        </div>
       </div>
 
     </div>
